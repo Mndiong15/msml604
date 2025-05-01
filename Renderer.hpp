@@ -13,6 +13,8 @@ class Renderer
 {
 public:
     void Render(const Scene& scene);
+    void PreRender(Scene& scene, const int& spp);
+    void AdaptiveRender(const Scene& scene);
 
 private:
 };

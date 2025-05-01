@@ -13,6 +13,27 @@
 int main(int argc, char** argv)
 {
 
+    // 检查参数数量
+    if (argc < 3) {
+        std::cerr << "Usage: " << argv[0] << " <render_mode> <spp>\n";
+        std::cerr << "  <render_mode>: p for PreRender, b for Baseline Render, a for Adaptive Render\n";
+        std::cerr << "  <spp>: Number of samples per pixel\n";
+        return 1;
+    }
+
+    // 解析参数
+    char render_mode = argv[1][0]; // 渲染模式
+    int spp = std::stoi(argv[2]);         // 每像素采样数
+
+    // 检查参数有效性
+    if (render_mode != 'p' && render_mode != 'b' && render_mode != 'a') {
+        std::cerr << "Invalid render_mode. Use p for PreRender, b for Baseline Render, or a for Adaptive Render.\n";
+        return 1;
+    }
+    if (spp <= 0) {
+        std::cerr << "Invalid spp. It must be a positive integer.\n";
+        return 1;
+    }
     // Change the definition here to change resolution
     Scene scene(784, 784);
 
@@ -44,8 +65,22 @@ int main(int argc, char** argv)
     Renderer r;
 
     auto start = std::chrono::system_clock::now();
-    r.Render(scene);
+    if (render_mode == 'p') {
+        std::cout << "PreRender mode selected.\n";
+        r.PreRender(scene, spp);
+    } else if (render_mode == 'b') {
+        std::cout << "Baseline Render mode selected.\n";
+        r.Render(scene);
+    } else if (render_mode == 'a') {
+        std::cout << "Adaptive Render mode selected.\n";
+        r.AdaptiveRender(scene);
+    }
     auto stop = std::chrono::system_clock::now();
+
+    // auto start = std::chrono::system_clock::now();
+    // // r.Render(scene);
+    // r.PreRender(scene, 2);
+    // auto stop = std::chrono::system_clock::now();
 
     std::cout << "Render complete: \n";
     std::cout << "Time taken: " << std::chrono::duration_cast<std::chrono::hours>(stop - start).count() << " hours\n";
