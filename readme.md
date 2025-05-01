@@ -27,3 +27,4 @@ for adaptive rendering, run:
 ```
 ./RayTracing a 16
 ```
+Note that for adaptive rendering, there must be a file in the build directory named `sampledistribution.txt` recording how many samples should be allocated to each pixel. The mode of `sampledistribution.txt` should be similar to `variance.txt`, i.e. one line for each pixel. Otherwise, the program will crash.
