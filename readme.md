@@ -10,6 +10,12 @@ There are 2 parameters which can be delivered to the program.
 
 The first parameter indicates the rendering mode:
 p for PreRender; b for Baseline Render; a for Adaptive Render.
+### Pre-rendering
+Merely calculate the variance of the scene by distributing the samples uniformly and store it in `variance.txt` and also in `scene.variance` during the program. This mode does not output a picture.
+### Baseline rendering
+Render the picture by distributing the samples uniformly and output it as `binary.ppm`.
+### Adaptive rendering
+Render the picture by adaptively allocating the samples according to calculated sample distribution. 
 
 The second parameter indicates the samples per pixel(spp):
 for PreRender and Baseline Render, spp is useful; for Adaptive Render, spp is of no use, so type any number you like.
